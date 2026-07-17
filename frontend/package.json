@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --webpack",
+    "prebuild": "npm install --production=false",
     "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint"
