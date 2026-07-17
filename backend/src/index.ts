@@ -1,15 +1,17 @@
+import dotenv from 'dotenv';
+// Load environment variables immediately before any other imports
+dotenv.config();
+
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import compression from 'compression';
 import morgan from 'morgan';
-import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
 import rateLimit from 'express-rate-limit';
+import mongoose from 'mongoose';
 import { connectDB } from './config/db';
 import apiRoutes from './routes/api';
-
-// Load environment variables
-dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5050;
@@ -22,11 +24,14 @@ app.use(helmet());
 app.use(compression());
 app.use(cors({
   origin: process.env.CORS_ORIGIN || '*',
-  methods: ['GET', 'POST'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Range'],
+  credentials: true
 }));
-app.use(express.json());
-app.use(morgan('dev'));
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+app.use(cookieParser());
+app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
 
 // Rate Limiter
 const apiLimiter = rateLimit({
@@ -45,7 +50,7 @@ app.use('/api', apiLimiter);
 
 // Database Connection Check Middleware
 app.use('/api', (req, res, next) => {
-  const isConnected = require('mongoose').connection.readyState === 1;
+  const isConnected = mongoose.connection.readyState === 1;
   // Let the AI chatbot operate offline, but gate database-driven routes
   if (!req.path.startsWith('/ai/chat') && !req.path.startsWith('/chat') && !isConnected) {
     res.status(503).json({
@@ -113,6 +118,14 @@ app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok', timestamp: new Date() });
 });
 
+// 404 handler middleware
+app.use((req, res, next) => {
+  res.status(404).json({
+    success: false,
+    message: `Route ${req.method} ${req.originalUrl} not found`
+  });
+});
+
 // Error handling middleware
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.error(err.stack || err);
@@ -124,6 +137,25 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
 });
 
 // Start Server
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT} in ${process.env.NODE_ENV || 'development'} mode.`);
 });
+
+// Graceful shutdown handler
+const gracefulShutdown = () => {
+  console.log('Received shutdown signal. Closing server...');
+  server.close(async () => {
+    console.log('Express server closed.');
+    try {
+      await mongoose.connection.close();
+      console.log('MongoDB connection closed.');
+      process.exit(0);
+    } catch (err) {
+      console.error('Error during MongoDB connection close:', err);
+      process.exit(1);
+    }
+  });
+};
+
+process.on('SIGTERM', gracefulShutdown);
+process.on('SIGINT', gracefulShutdown);
