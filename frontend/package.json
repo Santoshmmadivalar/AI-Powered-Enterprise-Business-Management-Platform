@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --webpack",
-    "prebuild": "npm install --production=false",
-    "build": "next build --webpack",
+    "dev": "next dev",
+    "prebuild": "npm ci --include=dev",
+    "build": "next build",
     "start": "next start",
     "lint": "eslint"
   },
