@@ -1,5 +1,4 @@
 import type { NextConfig } from "next";
-
 import path from "path";
 
 const nextConfig: NextConfig = {
@@ -20,6 +19,14 @@ const nextConfig: NextConfig = {
       'react': './node_modules/react',
       'react-dom': './node_modules/react-dom',
     },
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: 'http://localhost:5050/api/:path*',
+      },
+    ];
   },
 };
 

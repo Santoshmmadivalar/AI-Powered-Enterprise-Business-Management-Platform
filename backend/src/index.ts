@@ -14,7 +14,7 @@ import { connectDB } from './config/db';
 import apiRoutes from './routes/api';
 
 const app = express();
-const PORT = process.env.PORT || 5050;
+const PORT = process.env.BACKEND_PORT || 5050;
 
 // Connect to Database
 connectDB();
