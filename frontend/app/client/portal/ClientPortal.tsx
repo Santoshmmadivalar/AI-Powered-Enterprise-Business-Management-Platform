@@ -108,7 +108,7 @@ export default function ClientPortalDashboard() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm<TicketFields>({
-    resolver: zodResolver(ticketSchema),
+    resolver: (zodResolver as any)(ticketSchema),
     defaultValues: { priority: 'medium' }
   });
 

@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, CheckCircle2, Cpu, Wrench, Shield, QuestionMarkCircle, ArrowRight } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, Cpu, Wrench, Shield, ArrowRight } from 'lucide-react';
 import { getServiceBySlug, getServices } from '../../../services/api';
 import { Service } from '../../../types';
 import { fallbackServices } from '../../../constants/fallbackData';

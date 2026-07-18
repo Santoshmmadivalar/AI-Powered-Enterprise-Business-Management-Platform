@@ -111,12 +111,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const logout = () => {
+  function logout() {
     localStorage.removeItem('token');
     setToken(null);
     setUser(null);
     router.push('/login');
-  };
+  }
 
   return (
     <AuthContext.Provider value={{ user, token, loading, login, register, loginWithToken, logout }}>

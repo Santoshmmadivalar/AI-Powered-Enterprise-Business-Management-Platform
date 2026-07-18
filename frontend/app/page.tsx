@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { ArrowRight, Code, Globe, Framer, Cloud, Shield, Database, Cpu, Mail, Star, ExternalLink } from 'lucide-react';
+import { ArrowRight, Code, Globe, Cloud, Shield, Database, Cpu, Mail, Star, ExternalLink } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { getServices, getPortfolio, getTestimonials } from '../services/api';
 import { Service, Project, Testimonial } from '../types';

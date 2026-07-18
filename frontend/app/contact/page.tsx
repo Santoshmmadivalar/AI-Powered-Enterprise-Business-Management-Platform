@@ -28,7 +28,7 @@ export default function ContactPage() {
     reset,
     formState: { errors },
   } = useForm<ContactFormData>({
-    resolver: zodResolver(contactFormSchema),
+    resolver: (zodResolver as any)(contactFormSchema),
     defaultValues: {
       name: '',
       email: '',

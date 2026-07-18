@@ -43,10 +43,10 @@ export default function PortfolioPage() {
     fetchPortfolio();
   }, []);
 
-  const extractCategories = (items: Project[]) => {
+  function extractCategories(items: Project[]) {
     const cats = new Set(items.map((item) => item.category.name));
     setCategories(['All', ...Array.from(cats)]);
-  };
+  }
 
   const handleFilter = (cat: string) => {
     setSelectedCat(cat);

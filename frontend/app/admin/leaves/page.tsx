@@ -45,7 +45,7 @@ export default function AdminLeavesAndPayrollPage() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<PayrollFields>({
-    resolver: zodResolver(payrollSchema),
+    resolver: (zodResolver as any)(payrollSchema),
     defaultValues: {
       year: new Date().getFullYear(),
       bonuses: 0,

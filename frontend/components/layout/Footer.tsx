@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Mail, Phone, MapPin, Send, Heart } from 'lucide-react';
 import { LinkedinIcon, TwitterIcon, GithubIcon } from '../ui/BrandIcons';
 import { subscribeNewsletter } from '../../services/api';
+import { cn } from '../../utils/cn';
 
 export const Footer: React.FC = () => {
   const [email, setEmail] = useState('');

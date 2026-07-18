@@ -5,19 +5,20 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  outputFileTracingRoot: process.cwd(),
+  outputFileTracingRoot: path.resolve(process.cwd(), '..'),
   webpack: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
-      'react': path.resolve(process.cwd(), 'node_modules/react'),
-      'react-dom': path.resolve(process.cwd(), 'node_modules/react-dom'),
+      'react': path.resolve(process.cwd(), '../node_modules/react'),
+      'react-dom': path.resolve(process.cwd(), '../node_modules/react-dom'),
     };
     return config;
   },
   turbopack: {
+    root: path.resolve(process.cwd(), '..'),
     resolveAlias: {
-      'react': './node_modules/react',
-      'react-dom': './node_modules/react-dom',
+      'react': '../node_modules/react',
+      'react-dom': '../node_modules/react-dom',
     },
   },
   async rewrites() {

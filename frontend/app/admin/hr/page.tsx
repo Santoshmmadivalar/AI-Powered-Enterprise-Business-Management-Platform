@@ -45,7 +45,7 @@ export default function AdminHRPage() {
   const [scoreFilter, setScoreFilter] = useState<string>('all');
 
   const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<JobFields>({
-    resolver: zodResolver(jobSchema)
+    resolver: (zodResolver as any)(jobSchema)
   });
 
   const fetchApplications = async () => {

@@ -70,7 +70,7 @@ export default function CareersPage() {
   const [submitError, setSubmitError] = useState<string | null>(null);
 
   const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<ApplicationFields>({
-    resolver: zodResolver(applicationSchema)
+    resolver: (zodResolver as any)(applicationSchema)
   });
 
   const fetchJobs = async () => {

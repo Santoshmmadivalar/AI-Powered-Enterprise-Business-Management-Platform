@@ -42,7 +42,7 @@ export default function RegisterPage() {
   const [verifyingOtp, setVerifyingOtp] = useState(false);
 
   const { register: registerField, handleSubmit, watch, formState: { errors, isSubmitting } } = useForm<RegisterFields>({
-    resolver: zodResolver(registerSchema),
+    resolver: (zodResolver as any)(registerSchema),
     defaultValues: {
       role: 'user'
     }

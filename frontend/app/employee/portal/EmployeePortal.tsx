@@ -74,7 +74,7 @@ export default function EmployeePortalDashboard() {
   const [currentDate, setCurrentDate] = useState<string>('');
 
   const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<LeaveFields>({
-    resolver: zodResolver(leaveSchema)
+    resolver: (zodResolver as any)(leaveSchema)
   });
 
   // Local Clock ticking
@@ -124,7 +124,7 @@ export default function EmployeePortalDashboard() {
     try {
       const response = await punchIn();
       if (response.success) {
-        setSuccessMsg(response.message);
+        setSuccessMsg(response.message || 'Punched in successfully');
         fetchPortalData();
       } else {
         setErrorMsg(response.message || 'Punch in failed.');
@@ -140,7 +140,7 @@ export default function EmployeePortalDashboard() {
     try {
       const response = await punchOut();
       if (response.success) {
-        setSuccessMsg(response.message);
+        setSuccessMsg(response.message || 'Punched out successfully');
         fetchPortalData();
       } else {
         setErrorMsg(response.message || 'Punch out failed.');

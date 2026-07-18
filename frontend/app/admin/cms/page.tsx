@@ -60,15 +60,15 @@ export default function AdminCMSPage() {
 
   // Forms
   const { register: regBlog, handleSubmit: subBlog, reset: resBlog, formState: { errors: errBlog } } = useForm<BlogFields>({
-    resolver: zodResolver(blogSchema)
+    resolver: (zodResolver as any)(blogSchema)
   });
   
   const { register: regMedia, handleSubmit: subMedia, reset: resMedia, formState: { errors: errMedia } } = useForm<MediaFields>({
-    resolver: zodResolver(mediaSchema)
+    resolver: (zodResolver as any)(mediaSchema)
   });
 
   const { register: regFAQ, handleSubmit: subFAQ, reset: resFAQ, formState: { errors: errFAQ } } = useForm<FAQFields>({
-    resolver: zodResolver(faqSchema)
+    resolver: (zodResolver as any)(faqSchema)
   });
 
   const loadData = async () => {

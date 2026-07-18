@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ArrowRight, Sparkles, Code, Globe, Framer, Cloud } from 'lucide-react';
+import { ArrowRight, Sparkles, Code, Globe, Cloud } from 'lucide-react';
 import { getServices } from '../../services/api';
 import { Service } from '../../types';
 import { fallbackServices } from '../../constants/fallbackData';

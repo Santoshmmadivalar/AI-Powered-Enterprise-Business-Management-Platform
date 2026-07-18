@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { getFAQs } from '../../services/api';
-import { Search, Accordion, HelpCircle } from 'lucide-react';
+import { Search, HelpCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface FAQItem {

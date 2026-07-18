@@ -32,7 +32,7 @@ export default function LoginPage() {
   const [verifyingOtp, setVerifyingOtp] = useState(false);
 
   const { register: registerField, handleSubmit, setValue, formState: { errors, isSubmitting } } = useForm<LoginFields>({
-    resolver: zodResolver(loginSchema)
+    resolver: (zodResolver as any)(loginSchema)
   });
 
   // Redirect if already logged in
@@ -87,7 +87,7 @@ export default function LoginPage() {
 
   const onSubmit = async (data: LoginFields) => {
     setErrorMsg(null);
-    const result = await login(data.email, data.password);
+    const result = (await login(data.email, data.password)) as any;
     if (!result.success) {
       if (result.requiresVerification) {
         setRegisteredEmail(result.email);

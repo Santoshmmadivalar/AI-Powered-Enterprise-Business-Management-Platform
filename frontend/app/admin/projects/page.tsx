@@ -94,11 +94,11 @@ export default function AdminProjectManagementDashboard() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const { register: regProject, handleSubmit: subProject, reset: resProject, formState: { errors: errProject } } = useForm<ProjectFields>({
-    resolver: zodResolver(projectFormSchema)
+    resolver: (zodResolver as any)(projectFormSchema)
   });
 
   const { register: regInvoice, handleSubmit: subInvoice, reset: resInvoice, formState: { errors: errInvoice } } = useForm<InvoiceFields>({
-    resolver: zodResolver(invoiceFormSchema)
+    resolver: (zodResolver as any)(invoiceFormSchema)
   });
 
   const fetchData = async () => {
