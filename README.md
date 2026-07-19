@@ -106,6 +106,7 @@ graph TD
    ```
    *The Express server boots on [http://localhost:5000](http://localhost:5000).*
 
+
 ### Step 2: Set Up the Frontend
 1. Navigate into the `frontend/` directory:
    ```bash
