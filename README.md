@@ -230,6 +230,7 @@ All backend endpoints are prefixed with `/api`. Rate limiting is configured at *
    `mongodb+srv://<username>:<password>@cluster.mongodb.net/outpro`
 3. Whitelist access IP addresses (`0.0.0.0/` for dynamic host providers).
 
+
 ### Backend (Render / Railway)
 1. Link your GitHub repository to [Render](https://render.com/) or [Railway](https://railway.app/).
 2. Select **Web Service** node template and point to the `backend/` directory root.
@@ -241,6 +242,7 @@ All backend endpoints are prefixed with `/api`. Rate limiting is configured at *
    - `NODE_ENV=production`
    - `MONGODB_URI=mongodb+srv://...`
    - `CORS_ORIGIN=https://outpro-frontend.vercel.app` (your frontend domain)
+
 
 ### Frontend (Vercel)
 1. Import repository to [Vercel](https://vercel.com/).
@@ -296,3 +298,4 @@ To ensure the corporate portal achieves PageSpeed scores of **95+** and security
 4. **Code Audits**: Run `npm run build` locally before pushing to Vercel/Render to capture compilation warning states.
 
 ---
+
