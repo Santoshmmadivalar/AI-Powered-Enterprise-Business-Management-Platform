@@ -11,20 +11,20 @@ const api = axios.create({
 });
 
 // Add interceptor to include auth header if token exists
-if (typeof window !== 'undefined') {
-  api.interceptors.request.use(
-    (config) => {
+api.interceptors.request.use(
+  (config) => {
+    if (typeof window !== 'undefined') {
       const token = localStorage.getItem('token');
-      if (token) {
+      if (token && token.trim() !== '' && token !== 'undefined' && token !== 'null') {
         config.headers.Authorization = `Bearer ${token}`;
       }
-      return config;
-    },
-    (error) => {
-      return Promise.reject(error);
     }
-  );
-}
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 export const getServices = async (): Promise<APIResponse<Service[]>> => {
   const response = await api.get<APIResponse<Service[]>>('/services');

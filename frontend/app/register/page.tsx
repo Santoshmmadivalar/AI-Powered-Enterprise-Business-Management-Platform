@@ -64,8 +64,10 @@ export default function RegisterPage() {
     setErrorMsg(null);
     const result = await registerUser(data);
     if (result.success) {
-      setRegisteredEmail(data.email);
-      setShowOtpVerify(true);
+      if (!result.data?.token) {
+        setRegisteredEmail(data.email);
+        setShowOtpVerify(true);
+      }
     } else {
       setErrorMsg(result.message || 'Registration failed');
     }

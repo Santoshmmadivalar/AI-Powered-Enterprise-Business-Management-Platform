@@ -27,19 +27,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const initAuth = async () => {
       try {
         const storedToken = localStorage.getItem('token');
-        if (storedToken) {
+        if (storedToken && storedToken.trim() !== '' && storedToken !== 'undefined' && storedToken !== 'null') {
           setToken(storedToken);
           // Verify token and fetch profile
           const response = await api.get<APIResponse<User>>('/auth/me');
-          if (response.data.success) {
+          if (response.data && response.data.success && response.data.data) {
             setUser(response.data.data);
           } else {
             // Token expired or invalid
             logout();
           }
+        } else {
+          localStorage.removeItem('token');
+          setToken(null);
+          setUser(null);
         }
       } catch (error) {
-        console.error('Failed to authenticate token:', error);
+        console.warn('Authentication token verification failed:', error);
         logout();
       } finally {
         setLoading(false);
@@ -57,7 +61,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         password,
       });
 
-      if (response.data.success) {
+      if (response.data && response.data.success && response.data.data?.token) {
         const { token: userToken, user: userData } = response.data.data;
         localStorage.setItem('token', userToken);
         setToken(userToken);
@@ -65,7 +69,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
       return response.data;
     } catch (error: any) {
-      setLoading(false);
       if (error.response?.data) {
         return error.response.data;
       }
@@ -79,7 +82,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setLoading(true);
     try {
       const response = await api.post<APIResponse<{ token: string; user: User }>>('/auth/register', userData);
-      if (response.data.success) {
+      if (response.data && response.data.success && response.data.data?.token) {
         const { token: userToken, user: uData } = response.data.data;
         localStorage.setItem('token', userToken);
         setToken(userToken);
@@ -87,7 +90,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
       return response.data;
     } catch (error: any) {
-      setLoading(false);
       if (error.response?.data) {
         return error.response.data;
       }
@@ -98,11 +100,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const loginWithToken = async (userToken: string) => {
+    if (!userToken || userToken === 'undefined' || userToken === 'null') return;
     localStorage.setItem('token', userToken);
     setToken(userToken);
     try {
       const response = await api.get<APIResponse<User>>('/auth/me');
-      if (response.data.success) {
+      if (response.data && response.data.success && response.data.data) {
         setUser(response.data.data);
       }
     } catch (error) {

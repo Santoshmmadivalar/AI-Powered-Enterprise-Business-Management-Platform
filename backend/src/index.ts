@@ -51,8 +51,17 @@ app.use('/api', apiLimiter);
 // Database Connection Check Middleware
 app.use('/api', (req, res, next) => {
   const isConnected = mongoose.connection.readyState === 1;
-  // Let the AI chatbot operate offline, but gate database-driven routes
-  if (!req.path.startsWith('/ai/chat') && !req.path.startsWith('/chat') && !isConnected) {
+  const isBypassedRoute = 
+    req.path.startsWith('/auth') || 
+    req.path.startsWith('/ai') || 
+    req.path.startsWith('/chat') ||
+    req.path.startsWith('/services') ||
+    req.path.startsWith('/portfolio') ||
+    req.path.startsWith('/testimonials') ||
+    req.path.startsWith('/team') ||
+    req.path.startsWith('/faqs');
+
+  if (!isBypassedRoute && !isConnected) {
     res.status(503).json({
       success: false,
       message: 'MongoDB database is offline. Please start MongoDB locally or check your MONGODB_URI connection configuration.'

@@ -13,7 +13,7 @@ import { getJobs, getJobById, createJob, applyForJob, getApplications, updateApp
 import { punchIn, punchOut, getAttendanceLogs, requestLeave, getLeaves, getAllLeaves, updateLeaveStatus, getSalarySlips, createSalarySlip } from '../controllers/employeeController';
 import { getClientProjects, getAllProjects, createClientProject, updateProjectMilestone, getClientInvoices, getAllInvoices, createInvoice, payInvoice, getClientTickets, createSupportTicket, replyToTicket, getAllTickets, updateTicketStatus } from '../controllers/clientController';
 import { getEnquiries, createCRMEnquiry, updateCRMStatus, addFollowUpNote } from '../controllers/crmController';
-import { processAIChat, generateProposal, generateContent, analyzeResume, getChatHistory, deleteChatHistory } from '../controllers/aiController';
+import { processAIChat, processStreamingAIChat, generateProposal, generateContent, analyzeResume, getChatHistory, deleteChatHistory } from '../controllers/aiController';
 import { getNotifications, markRead } from '../controllers/notificationController';
 import { getBlogs, getBlogBySlug, createBlog, updateBlog, deleteBlog, addComment, likeBlog } from '../controllers/blogController';
 import { getGalleryItems, createGalleryItem, deleteGalleryItem } from '../controllers/galleryController';
@@ -41,8 +41,9 @@ router.post('/meetings', authenticate, bookMeeting);
 router.put('/meetings/:id/reschedule', authenticate, rescheduleMeeting);
 router.put('/meetings/:id/cancel', authenticate, cancelMeeting);
 
-// AI Chat route
+// AI Chat routes
 router.post('/ai/chat', processAIChat);
+router.post('/ai/chat/stream', processStreamingAIChat);
 router.post('/chat', processAIChat);
 router.get('/chat/history', authenticate, getChatHistory);
 router.delete('/chat/history', authenticate, deleteChatHistory);

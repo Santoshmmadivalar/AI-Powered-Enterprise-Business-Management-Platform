@@ -16,7 +16,7 @@ dotenv.config();
 
 const seedDB = async (): Promise<void> => {
   try {
-    const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/outpro';
+    const mongoURI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/outpro';
     await mongoose.connect(mongoURI);
     console.log('Connected to database for seeding...');
 
@@ -338,7 +338,8 @@ const seedDB = async (): Promise<void> => {
         password: hashedPassword,
         role: 'admin',
         title: 'CEO & Founder',
-        department: 'Executive'
+        department: 'Executive',
+        isVerified: true
       },
       {
         name: 'Kabir Malhotra',
@@ -346,26 +347,30 @@ const seedDB = async (): Promise<void> => {
         password: hashedPassword,
         role: 'employee',
         title: 'Head of Design',
-        department: 'Design'
+        department: 'Design',
+        isVerified: true
       },
       {
         name: 'Sarah Jenkins',
         email: 'client@outpro.india',
         password: hashedPassword,
         role: 'client',
-        companyName: 'Vanguard Realty'
+        companyName: 'Vanguard Realty',
+        isVerified: true
       },
       {
         name: 'John Doe',
         email: 'candidate@outpro.india',
         password: hashedPassword,
-        role: 'candidate'
+        role: 'candidate',
+        isVerified: true
       },
       {
         name: 'Jane Smith',
         email: 'user@outpro.india',
         password: hashedPassword,
-        role: 'user'
+        role: 'user',
+        isVerified: true
       }
     ]);
     console.log('Seeded users.');
